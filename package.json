@@ -7,11 +7,15 @@
     "test": "jest"
   },
   "dependencies": {
+    "@react-native-community/slider": "^1.0.4",
+    "@react-native-community/viewpager": "^1.1.6",
     "eslint-config-rallycoding": "^3.2.0",
     "react": "16.8.3",
     "react-native": "0.59.4",
     "react-native-gesture-handler": "^1.1.0",
-    "react-navigation": "^3.8.1"
+    "react-navigation": "^3.8.1",
+    "react-redux": "^7.0.2",
+    "redux": "^4.0.1"
   },
   "devDependencies": {
     "@babel/core": "^7.4.3",

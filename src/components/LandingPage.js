@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { View, Text, StyleSheet, StatusBar } from "react-native";
-import { Actions } from "react-native-router-flux";
 import { Button } from "./common";
 import lang from "../lang.json";
 
