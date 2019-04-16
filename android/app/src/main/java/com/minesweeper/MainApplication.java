@@ -5,6 +5,8 @@ import android.app.Application;
 import com.facebook.react.ReactApplication;
 import com.thebylito.navigationbarcolor.NavigationBarColorPackage;
 import com.swmansion.gesturehandler.react.RNGestureHandlerPackage;
+import com.reactnativecommunity.viewpager.RNCViewPagerPackage;
+import com.reactnativecommunity.slider.ReactSliderPackage;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
 import com.facebook.react.shell.MainReactPackage;
@@ -26,7 +28,9 @@ public class MainApplication extends Application implements ReactApplication {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
             new NavigationBarColorPackage(),
-            new RNGestureHandlerPackage()
+            new RNGestureHandlerPackage(),
+            new RNCViewPagerPackage(),
+            new ReactSliderPackage()
       );
     }
 

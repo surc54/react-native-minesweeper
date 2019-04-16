@@ -14,25 +14,24 @@ class GamePage extends Component {
     };
 
     componentWillMount() {
-        BackHandler.addEventListener("hardwareBackPress", this.onBackPress);
+        this.backPressListener = BackHandler.addEventListener("hardwareBackPress", () => {
+            this.setState({ confirmBack: true });
+            return true;
+        });
         this.willFocusListener = this.props.navigation.addListener("willFocus", payload => {
             changeNavigationBarColor("#dddddd", true);
         });
     }
 
     componentWillUnmount() {
-        console.log("COMPONENT UNMOUNT");
-        BackHandler.removeEventListener("hardwareBackPress", this.onBackPress);
+        if (this.backPressListener) {
+            this.backPressListener.remove();
+        }
         if (this.willFocusListener) {
             this.willFocusListener.remove();
         }
     }
     
-    onBackPress() {
-        console.log("GAME: BACK");
-        this.setState({ confirmBack: true });
-        return true;
-    }
 
     goBack() {
         const { goBack } = this.props.navigation;
