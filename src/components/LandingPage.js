@@ -1,9 +1,14 @@
 import React, { Component } from "react";
 import { View, Text, StyleSheet, StatusBar } from "react-native";
+import changeNavigationBarColor from 'react-native-navigation-bar-color';
 import { Button } from "./common";
 import lang from "../lang.json";
 
 class LandingPage extends Component {
+
+    componentWillMount() {
+        changeNavigationBarColor("white", true);
+    }
 
     componentDidMount() {
         this.onPressPlay();

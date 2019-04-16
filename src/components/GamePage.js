@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { View, Text, StyleSheet, StatusBar, BackHandler } from "react-native";
+import changeNavigationBarColor from 'react-native-navigation-bar-color';
 import { Confirm } from "./common";
 import Tile from "./Tile";
 
@@ -12,8 +13,9 @@ class GamePage extends Component {
         confirmBack: false
     };
 
-    componentDidMount() {
+    componentWillMount() {
         BackHandler.addEventListener("hardwareBackPress", this.onBackPress.bind(this));
+        changeNavigationBarColor("white", true);
     }
 
     componentWillUnmount() {

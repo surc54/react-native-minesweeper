@@ -5580,6 +5580,11 @@ react-native-gesture-handler@^1.1.0:
     invariant "^2.2.2"
     prop-types "^15.5.10"
 
+react-native-navigation-bar-color@^0.0.9:
+  version "0.0.9"
+  resolved "https://registry.yarnpkg.com/react-native-navigation-bar-color/-/react-native-navigation-bar-color-0.0.9.tgz#3568e89ac714532e576013e9fee89e4ebd48deb8"
+  integrity sha512-8axPLhcccW7W6veE62OXrzHMs7nQT6QqWCdyGJn6/LUyst+Fkys7hCDdW+soxwHbMmDIr0Ih1lDIAT06FvExnw==
+
 react-native-safe-area-view@^0.13.0:
   version "0.13.1"
   resolved "https://registry.yarnpkg.com/react-native-safe-area-view/-/react-native-safe-area-view-0.13.1.tgz#834bbb6d22f76a7ff07de56725ee5667ba1386b0"
