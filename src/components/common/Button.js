@@ -1,7 +1,30 @@
 import React from "react";
-import { Text, TouchableOpacity, StyleSheet } from "react-native";
+import {
+    Text,
+    TouchableOpacity,
+    TouchableNativeFeedback,
+    StyleSheet,
+    Platform,
+    View
+} from "react-native";
 
 const Button = (props) => {
+    if (Platform.OS === "android") {
+        return (
+            <TouchableNativeFeedback
+                style={styles.nativeTouch}
+                onPress={props.onPress}
+                background={TouchableNativeFeedback.SelectableBackground()}
+            >
+                <View style={styles.button}>
+                    <Text style={styles.buttonText}>
+                        {props.children}
+                    </Text>
+                </View>
+            </TouchableNativeFeedback>
+        );
+    }
+
     return (
         <TouchableOpacity style={styles.button} onPress={props.onPress}>
             <Text style={styles.buttonText}>
@@ -12,6 +35,9 @@ const Button = (props) => {
 };
 
 const styles = StyleSheet.create({
+    nativeTouch: {
+        // Tried to round corners
+    },
     button: {
         flex: 1,
         alignSelf: "stretch",
@@ -21,7 +47,7 @@ const styles = StyleSheet.create({
         borderColor: "#007aff",
         marginLeft: 5,
         marginRight: 5,
-        minHeight: 36
+        minHeight: 44
     },
     buttonText: {
         alignSelf: "center",
