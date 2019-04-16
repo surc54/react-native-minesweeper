@@ -16,7 +16,7 @@ const Button = (props) => {
                 onPress={props.onPress}
                 background={TouchableNativeFeedback.SelectableBackground()}
             >
-                <View style={styles.button}>
+                <View style={[styles.button, props.style]}>
                     <Text style={styles.buttonText}>
                         {props.children}
                     </Text>
@@ -26,7 +26,7 @@ const Button = (props) => {
     }
 
     return (
-        <TouchableOpacity style={styles.button} onPress={props.onPress}>
+        <TouchableOpacity style={[styles.button, props.style]} onPress={props.onPress}>
             <Text style={styles.buttonText}>
                 {props.children}
             </Text>

@@ -1,17 +1,33 @@
 import React, { Component } from "react";
-import { View, Text, StyleSheet, StatusBar } from "react-native";
-import changeNavigationBarColor from 'react-native-navigation-bar-color';
+import { View, Text, StyleSheet, StatusBar, BackHandler } from "react-native";
+import changeNavigationBarColor from "react-native-navigation-bar-color";
 import { Button } from "./common";
 import lang from "../lang.json";
 
 class LandingPage extends Component {
 
     componentWillMount() {
-        changeNavigationBarColor("white", true);
+        BackHandler.addEventListener("hardwareBackPress", this.onBackPress);
+        this.willFocusListener = this.props.navigation.addListener("willFocus", payload => {
+            changeNavigationBarColor("white", true);
+        });
     }
 
     componentDidMount() {
         this.onPressPlay();
+    }
+
+    componentWillUnmount() {
+        BackHandler.removeEventListener("hardwareBackPress", this.onBackPress);
+        if (this.willFocusListener) {
+            this.willFocusListener.remove();
+        }
+    }
+    
+    onBackPress() {
+        console.log("LANDING: BACK");
+        BackHandler.exitApp();
+        return true;
     }
     
     onPressPlay() {
