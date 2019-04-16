@@ -1,0 +1,13 @@
+{
+    "extends": "rallycoding",
+    "rules": {
+        "quotes": "off",
+        "no-useless-concat": "warn",
+        "no-unused-vars": "warn",
+        "no-else-return": "off",
+        "arrow-body-style": "off",
+        "react/self-closing-comp": "warn",
+        "import/no-named-as-default-member": "off",
+        "global-require": "off"
+    }
+}
