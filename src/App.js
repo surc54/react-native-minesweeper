@@ -8,14 +8,29 @@ import LandingPage from './components/LandingPage';
 import reducers from "./reducers";
 
 
-const MainNavigator = createStackNavigator({
-    Landing: {
-        screen: LandingPage
+const MainNavigator = createStackNavigator(
+    {
+        Landing: {
+            screen: LandingPage
+        },
+        Game: {
+            screen: GamePage
+        }
     },
-    Game: {
-        screen: GamePage
-    },
-});
+    {
+        initialRouteName: "Landing",
+        defaultNavigationOptions: {
+            headerStyle: {
+                backgroundColor: "white",
+            },
+            headerTintColor: "black",
+            headerTitleStyle: {
+                fontWeight: "bold",
+            },
+        },
+        headerMode: "none"
+    }
+);
 
 const Navigator = createAppContainer(MainNavigator);
 
@@ -23,7 +38,7 @@ const Navigator = createAppContainer(MainNavigator);
 const App = () => {
     return (
         <Provider store={createStore(reducers)}>
-            <LandingPage />
+            <Navigator />
         </Provider>
     );
 };

@@ -4,15 +4,14 @@ import { Button } from "./common";
 import lang from "../lang.json";
 
 class LandingPage extends Component {
+
+    componentDidMount() {
+        this.onPressPlay();
+    }
+    
     onPressPlay() {
         const { navigate } = this.props.navigation;
         navigate("Game");
-        // Actions.game({
-        //     onBack: () => {
-        //         console.log("hehehe");
-        //         return true;
-        //     }
-        // });
     }
 
     render() {
