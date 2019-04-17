@@ -10,9 +10,28 @@ const sampleProp = {
 
 class Tile extends Component {
     renderSecondarySprite() {
-        const { mine = false, neighborMines = "0", size = "32" } = this.props;
+        const {
+            mine = false,
+            neighborMines = "0",
+            size = "32",
+            debug = false,
+            revealed = false
+        } = this.props;
 
-        if (mine || (neighborMines && Number(neighborMines) !== 0)) {
+        if (mine) {
+            if (revealed || debug) {
+                return (
+                    <Image
+                        source={require("../images/mine.png")}
+                        style={{
+                            width: Number(size),
+                            height: Number(size),
+                            marginTop: (Number(size) * -1)
+                        }}
+                    />
+                );
+            }
+        } else if (revealed) {
             const images = [
                 null,
                 require("../images/number_1.png"),
@@ -24,11 +43,10 @@ class Tile extends Component {
                 require("../images/number_7.png"),
                 require("../images/number_8.png")
             ];
+
             return (
                 <Image
-                    source={mine
-                        ? require("../images/mine.png")
-                        : images[neighborMines]}
+                    source={images[neighborMines]}
                     style={{
                         width: Number(size),
                         height: Number(size),
@@ -40,7 +58,7 @@ class Tile extends Component {
     }
 
     render() {
-        const { mine = false, revealed = false, size = "32" } = this.props;
+        const { revealed = false, size = "32" } = this.props;
 
         return (
             <View>

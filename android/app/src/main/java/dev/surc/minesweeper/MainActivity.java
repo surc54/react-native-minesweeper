@@ -1,4 +1,4 @@
-package com.minesweeper;
+package dev.surc.minesweeper;
 
 import com.facebook.react.ReactActivity;
 

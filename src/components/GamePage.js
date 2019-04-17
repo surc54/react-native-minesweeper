@@ -1,8 +1,12 @@
 import React, { Component } from "react";
 import { View, Text, StyleSheet, StatusBar, BackHandler, Switch } from "react-native";
 import changeNavigationBarColor from 'react-native-navigation-bar-color';
+import { connect } from "react-redux";
+
 import { Confirm, Button } from "./common";
 import Tile from "./Tile";
+import { setDebug } from "../actions";
+import ChooseTestBoardModal from "./ChooseTestBoardModal";
 
 class GamePage extends Component {
     static navigationOptions = {
@@ -10,7 +14,8 @@ class GamePage extends Component {
     }
 
     state = {
-        confirmBack: false
+        confirmBack: false,
+        chooseTestBoardModal: false
     };
 
     componentWillMount() {
@@ -31,12 +36,16 @@ class GamePage extends Component {
             this.willFocusListener.remove();
         }
     }
-    
 
+    // eslint-disable-next-line react/sort-comp
     goBack() {
         const { goBack } = this.props.navigation;
         this.setState({ confirmBack: false });
         goBack();
+    }
+
+    onDebugToggle(val) {
+        this.props.setDebug(val);
     }
 
     render() {
@@ -44,18 +53,42 @@ class GamePage extends Component {
             <View style={styles.container}>
                 <StatusBar barStyle="dark-content" backgroundColor="white" />
                 <View>
-                    <Text>Game Page</Text>
-                    <Tile />
-                    <Tile revealed neighborMines="2" />
-                    <Tile revealed mine />
+                    <View style={{ flexDirection: "row", flexWrap: "wrap", justifyContent: "center" }}>
+                        {
+                            (() => {
+                                const result = [];
+                                for (let i = 0; i < 228; i++) {
+                                    result.push(
+                                        (
+                                            <Tile key={i} mine />
+                                        )
+                                    );
+                                }
+                                return result;
+                            })()
+                        }
+                    </View>
                 </View>
 
                 <View style={styles.bottomBar}>
                     <View style={styles.debugControl}>
                         <Text style={styles.debugControlLabel}>Debug Mode: </Text>
-                        <Switch />
+                        <Switch
+                            onValueChange={this.onDebugToggle.bind(this)}
+                            value={this.props.debug}
+                            thumbColor={this.props.debug ? "#007aff" : "#fff"}
+                            trackColor={{ false: "#bbb", true: "#6696cc" }}
+                        />
                     </View>
-                    <Button style={{ flex: 1, alignSelf: "center" }}>Load Test Board</Button>
+                    <Button
+                        style={{ flex: 1, alignSelf: "center" }}
+                        onPress={() => { this.setState({ chooseTestBoardModal: true }); }}
+                    >Load Test Board</Button>
+
+                    <ChooseTestBoardModal
+                        visible={this.state.chooseTestBoardModal}
+                        onCancel={() => { this.setState({ chooseTestBoardModal: false }); }}
+                    />
                 </View>
 
                 <Confirm
@@ -86,7 +119,7 @@ const styles = StyleSheet.create({
         paddingLeft: 16,
         paddingRight: 11,
         alignSelf: "flex-end",
-        elevation: 4
+        elevation: 10
     },
     debugControl: {
         flexDirection: "row",
@@ -101,5 +134,12 @@ const styles = StyleSheet.create({
     }
 });
 
-export default GamePage;
+const mapStateToProps = ({ game }) => {
+    const { width, height, debug } = game;
+    return {
+        width, height, debug
+    };
+};
+
+export default connect(mapStateToProps, { setDebug })(GamePage);
 

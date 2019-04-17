@@ -1,8 +1,11 @@
 import React, { Component } from "react";
 import { View, Text, StyleSheet, StatusBar, BackHandler } from "react-native";
 import changeNavigationBarColor from "react-native-navigation-bar-color";
+import { connect } from "react-redux";
+
 import { Button } from "./common";
 import lang from "../lang.json";
+import { reset } from "../actions";
 
 class LandingPage extends Component {
 
@@ -23,15 +26,16 @@ class LandingPage extends Component {
             this.willFocusListener.remove();
         }
     }
-    
+
     onBackPress() {
         console.log("LANDING: BACK");
         BackHandler.exitApp();
         return true;
     }
-    
+
     onPressPlay() {
         const { navigate } = this.props.navigation;
+        this.props.reset();
         navigate("Game");
     }
 
@@ -73,5 +77,5 @@ const styles = StyleSheet.create({
     }
 });
 
-export default LandingPage;
+export default connect(null, { reset })(LandingPage);
 
