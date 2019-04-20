@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { View, Text, StyleSheet, StatusBar, BackHandler } from "react-native";
+import { View, Text, StyleSheet, StatusBar, BackHandler, Image } from "react-native";
 import changeNavigationBarColor from "react-native-navigation-bar-color";
 import { connect } from "react-redux";
 
@@ -17,7 +17,9 @@ class LandingPage extends Component {
     }
 
     componentDidMount() {
-        this.onPressPlay();
+        // setTimeout(() => {
+        //     this.onPressPlay();
+        // }, 200);
     }
 
     componentWillUnmount() {
@@ -43,6 +45,7 @@ class LandingPage extends Component {
         return (
             <View style={styles.container}>
                 <StatusBar barStyle="dark-content" backgroundColor="white" />
+                <Image source={require("../images/LandingLogo.png")} />
                 <Text style={styles.title}>
                     {lang.app.name}
                 </Text>
@@ -60,18 +63,18 @@ const styles = StyleSheet.create({
     container: {
         backgroundColor: "white",
         paddingBottom: 50,
-        flex: 1
+        flex: 1,
+        alignItems: "center",
+        justifyContent: "space-around"
     },
     title: {
         fontSize: 40,
         textAlign: "center",
         color: "black",
         fontWeight: "bold",
-        marginTop: 100
     },
     buttonWrapper: {
         flexDirection: "row",
-        marginTop: 200,
         paddingLeft: 50,
         paddingRight: 50
     }

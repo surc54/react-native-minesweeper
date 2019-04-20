@@ -54,3 +54,4 @@ buck-out/
 
 # Bundle artifact
 *.jsbundle
+app_rejection.pdf

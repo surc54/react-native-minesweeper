@@ -1,12 +1,20 @@
 import React, { Component } from "react";
-import { View, Text, StyleSheet, StatusBar, BackHandler, Switch } from "react-native";
+import {
+    View,
+    StyleSheet,
+    StatusBar,
+    BackHandler,
+    Dimensions
+} from "react-native";
 import changeNavigationBarColor from 'react-native-navigation-bar-color';
 import { connect } from "react-redux";
+import { ScrollView } from "react-native-gesture-handler";
 
-import { Confirm, Button } from "./common";
+import { Confirm } from "./common";
 import Tile from "./Tile";
-import { setDebug } from "../actions";
+import { setDebug, reset, tileGenTest } from "../actions";
 import ChooseTestBoardModal from "./ChooseTestBoardModal";
+import { ImageButton } from "./ImageButton";
 
 class GamePage extends Component {
     static navigationOptions = {
@@ -52,15 +60,32 @@ class GamePage extends Component {
         return (
             <View style={styles.container}>
                 <StatusBar barStyle="dark-content" backgroundColor="white" />
-                <View>
-                    <View style={{ flexDirection: "row", flexWrap: "wrap", justifyContent: "center" }}>
+                <ScrollView>
+                    <View
+                        style={{
+                            flexDirection: "row",
+                            flexWrap: "wrap",
+                            justifyContent: "center",
+                            paddingTop: 5,
+                            paddingBottom: 20
+                        }}
+                    >
                         {
                             (() => {
                                 const result = [];
-                                for (let i = 0; i < 228; i++) {
+                                for (let i = 0; i < this.props.tiles.length; i++) {
+                                    const tile = this.props.tiles[i];
                                     result.push(
                                         (
-                                            <Tile key={i} mine />
+                                            <Tile
+                                                key={i}
+                                                mine={tile.mine}
+                                                debug={this.props.debug}
+                                                neighborMines={tile.neighborMines}
+                                                revealed={tile.revealed}
+                                                flag={tile.flag}
+                                                tileIndex={i}
+                                            />
                                         )
                                     );
                                 }
@@ -68,28 +93,37 @@ class GamePage extends Component {
                             })()
                         }
                     </View>
-                </View>
+                </ScrollView>
 
                 <View style={styles.bottomBar}>
-                    <View style={styles.debugControl}>
-                        <Text style={styles.debugControlLabel}>Debug Mode: </Text>
-                        <Switch
-                            onValueChange={this.onDebugToggle.bind(this)}
-                            value={this.props.debug}
-                            thumbColor={this.props.debug ? "#007aff" : "#fff"}
-                            trackColor={{ false: "#bbb", true: "#6696cc" }}
+                    <View style={styles.bottomLayer}>
+                        <ImageButton
+                            source={require("../images/debug.png")}
+                            onPress={() => { this.props.setDebug(!this.props.debug); }}
+                        />
+                        <ImageButton
+                            source={require("../images/face_happy.png")}
+                            onPress={() => {
+                                let { height, width } = Dimensions.get('window');
+                                // MIGHT CAUSE PROBLEMS!! UPDATE LATER
+                                height = Math.floor(height / 32) - 5;
+                                width = Math.floor(width / 32);
+                                this.props.tileGenTest({ width, height });
+                                // Alert.alert("Feature not implemented.", "It's coming soon!");
+                            }}
+                        />
+                        <ImageButton
+                            source={require("../images/test_1.png")}
+                            onPress={() => { this.setState({ chooseTestBoardModal: true }); }}
+                        />
+
+                        <ChooseTestBoardModal
+                            visible={this.state.chooseTestBoardModal}
+                            onCancel={() => { this.setState({ chooseTestBoardModal: false }); }}
                         />
                     </View>
-                    <Button
-                        style={{ flex: 1, alignSelf: "center" }}
-                        onPress={() => { this.setState({ chooseTestBoardModal: true }); }}
-                    >Load Test Board</Button>
-
-                    <ChooseTestBoardModal
-                        visible={this.state.chooseTestBoardModal}
-                        onCancel={() => { this.setState({ chooseTestBoardModal: false }); }}
-                    />
                 </View>
+
 
                 <Confirm
                     visible={this.state.confirmBack}
@@ -115,11 +149,16 @@ const styles = StyleSheet.create({
     },
     bottomBar: {
         backgroundColor: "#ddd",
-        flexDirection: "row",
+        flexDirection: "column",
         paddingLeft: 16,
         paddingRight: 11,
-        alignSelf: "flex-end",
-        elevation: 10
+        elevation: 10,
+    },
+    bottomLayer: {
+        flexDirection: "row",
+        justifyContent: "space-around",
+        paddingTop: 20,
+        paddingBottom: 20
     },
     debugControl: {
         flexDirection: "row",
@@ -134,12 +173,12 @@ const styles = StyleSheet.create({
     }
 });
 
-const mapStateToProps = ({ game }) => {
+const mapStateToProps = ({ game, tiles }) => {
     const { width, height, debug } = game;
     return {
-        width, height, debug
+        width, height, debug, tiles
     };
 };
 
-export default connect(mapStateToProps, { setDebug })(GamePage);
+export default connect(mapStateToProps, { setDebug, reset, tileGenTest })(GamePage);
 

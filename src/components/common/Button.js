@@ -5,7 +5,8 @@ import {
     TouchableNativeFeedback,
     StyleSheet,
     Platform,
-    View
+    View,
+    Vibration
 } from "react-native";
 
 const Button = (props) => {
@@ -13,7 +14,10 @@ const Button = (props) => {
         return (
             <TouchableNativeFeedback
                 style={styles.nativeTouch}
-                onPress={props.onPress}
+                onPress={() => {
+                    Vibration.vibrate(15);
+                    if (props.onPress) props.onPress();
+                }}
                 background={TouchableNativeFeedback.SelectableBackground()}
             >
                 <View style={[styles.button(props.color || "#007aff"), props.style]}>
@@ -28,7 +32,10 @@ const Button = (props) => {
     return (
         <TouchableOpacity
             style={[styles.button(props.color || "#077aff"), props.style]}
-            onPress={props.onPress}
+            onPress={() => {
+                Vibration.vibrate(5);
+                if (props.onPress) props.onPress();
+            }}
         >
             <Text style={styles.buttonText(props.color || "#007aff")}>
                 {props.children}

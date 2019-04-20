@@ -1,26 +1,66 @@
 import React, { Component } from "react";
-import { View, Image, StyleSheet } from "react-native";
+import {
+    View,
+    Image,
+    StyleSheet,
+    TouchableWithoutFeedback,
+    Vibration
+} from "react-native";
+import { connect } from "react-redux";
+import { tileClick, tileLongClick } from "../actions";
 
 const sampleProp = {
     mine: false,
     neighborMines: 2,
     revealed: false,
-    length: "23"
+    length: "23",
+    tileIndex: 2
 };
 
 class Tile extends Component {
+
+    tilePress() {
+        if (this.props.revealed || this.props.flag) return;
+        Vibration.vibrate(5);
+        this.props.tileClick(this.props.tileIndex);
+    }
+
+    tileLongPress() {
+        if (this.props.revealed) return;
+        Vibration.vibrate(5);
+        this.props.tileLongClick(this.props.tileIndex);
+    }
+
     renderSecondarySprite() {
         const {
             mine = false,
             neighborMines = "0",
             size = "32",
             debug = false,
-            revealed = false
+            revealed = false,
+            flag = false
         } = this.props;
+
+        const response = [];
+        
+        if (flag && !revealed) {
+            response.push(
+                (
+                    <Image
+                        source={require("../images/flag.png")}
+                        style={{
+                            width: Number(size),
+                            height: Number(size),
+                            marginTop: (Number(size) * -1)
+                        }}
+                    />
+                )
+            );
+        }
 
         if (mine) {
             if (revealed || debug) {
-                return (
+                response.push((
                     <Image
                         source={require("../images/mine.png")}
                         style={{
@@ -29,7 +69,9 @@ class Tile extends Component {
                             marginTop: (Number(size) * -1)
                         }}
                     />
-                );
+                ));
+
+                return response;
             }
         } else if (revealed) {
             const images = [
@@ -55,28 +97,37 @@ class Tile extends Component {
                 />
             );
         }
+        if (response.length > 0) {
+            return response.length === 1 ? response[0] : response;
+        }
     }
 
     render() {
         const { revealed = false, size = "32" } = this.props;
 
         return (
-            <View>
-                <Image
-                    source={revealed
-                        ? require("../images/tile_revealed.png")
-                        : require("../images/tile_hidden.png")}
-                    style={{
-                        width: Number(size),
-                        height: Number(size)
-                    }}
-                />
-                {this.renderSecondarySprite()}
-            </View>
+            <TouchableWithoutFeedback
+                onPress={this.tilePress.bind(this)}
+                disabled={revealed}
+                onLongPress={this.tileLongPress.bind(this)}
+            >
+                <View>
+                    <Image
+                        source={revealed
+                            ? require("../images/tile_revealed.png")
+                            : require("../images/tile_hidden.png")}
+                        style={{
+                            width: Number(size),
+                            height: Number(size)
+                        }}
+                    />
+                    {this.renderSecondarySprite()}
+                </View>
+            </TouchableWithoutFeedback>
         );
     }
 }
 
 const styles = StyleSheet.create({});
 
-export default Tile;
+export default connect(null, { tileClick, tileLongClick })(Tile);

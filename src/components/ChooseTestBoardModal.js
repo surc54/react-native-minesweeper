@@ -1,6 +1,7 @@
 import React from "react";
 import { Text, View, Modal, StyleSheet, StatusBar } from "react-native";
 import { CardSection, Card, Button } from "./common";
+import { ImageButton } from "./ImageButton";
 
 class ChooseTestBoardModal extends React.Component {
 
@@ -22,20 +23,19 @@ class ChooseTestBoardModal extends React.Component {
                             </Text>
                         </CardSection>
                         <CardSection style={styles.buttonCardSection}>
-                            <View style={styles.buttonSection}>
-                                <Button onPress={this.props.loadOne}>
-                                    Load testboard1.brd
-                                </Button>
-                            </View>
-                            <View style={styles.buttonSection}>
-                                <Button onPress={this.props.loadTwo}>
-                                    Load testboard2.brd
-                                </Button>
-                            </View>
-                            <View style={styles.buttonSection}>
-                                <Button onPress={this.props.loadThree}>
-                                    Load testboard3.brd
-                                </Button>
+                            <View style={styles.loadButtonSection}>
+                                <ImageButton
+                                    source={require("../images/test_1.png")} 
+                                    onPress={this.props.loadOne}
+                                />
+                                <ImageButton
+                                    source={require("../images/test_2.png")} 
+                                    onPress={this.props.loadOne}
+                                />
+                                <ImageButton
+                                    source={require("../images/Test_3.png")} 
+                                    onPress={this.props.loadOne}
+                                />
                             </View>
                             <View style={styles.buttonSection}>
                                 <Button onPress={this.props.onCancel} color="red">
@@ -82,6 +82,11 @@ const styles = StyleSheet.create({
     buttonSection: {
         flexDirection: "row",
         marginBottom: 10
+    },
+    loadButtonSection: {
+        flexDirection: "row",
+        justifyContent: "space-around",
+        marginBottom: 30
     },
     container: {
         backgroundColor: "rgba(0, 0, 0, 0.75)",
