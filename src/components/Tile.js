@@ -42,7 +42,7 @@ class Tile extends Component {
         } = this.props;
 
         const response = [];
-        
+
         if (flag && !revealed) {
             response.push(
                 (
@@ -74,21 +74,40 @@ class Tile extends Component {
                 return response;
             }
         } else if (revealed) {
-            const images = [
-                null,
-                require("../images/number_1.png"),
-                require("../images/number_2.png"),
-                require("../images/number_3.png"),
-                require("../images/number_4.png"),
-                require("../images/number_5.png"),
-                require("../images/number_6.png"),
-                require("../images/number_7.png"),
-                require("../images/number_8.png")
-            ];
+            let image = null;
+
+            switch (neighborMines) {
+                case 1:
+                    image = require("../images/number_1.png");
+                    break;
+                case 2:
+                    image = require("../images/number_2.png");
+                    break;
+                case 3:
+                    image = require("../images/number_3.png");
+                    break;
+                case 4:
+                    image = require("../images/number_4.png");
+                    break;
+                case 5:
+                    image = require("../images/number_5.png");
+                    break;
+                case 6:
+                    image = require("../images/number_6.png");
+                    break;
+                case 7:
+                    image = require("../images/number_7.png");
+                    break;
+                case 8:
+                    image = require("../images/number_8.png");
+                    break;
+                default:
+                image = null;
+            }
 
             return (
                 <Image
-                    source={images[neighborMines]}
+                    source={image}
                     style={{
                         width: Number(size),
                         height: Number(size),

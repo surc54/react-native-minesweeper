@@ -4,7 +4,8 @@ import {
     StyleSheet,
     StatusBar,
     BackHandler,
-    Dimensions
+    Dimensions,
+    Text
 } from "react-native";
 import changeNavigationBarColor from 'react-native-navigation-bar-color';
 import { connect } from "react-redux";
@@ -59,7 +60,7 @@ class GamePage extends Component {
     render() {
         return (
             <View style={styles.container}>
-                <StatusBar barStyle="dark-content" backgroundColor="white" />
+                <StatusBar barStyle="dark-content" backgroundColor="white" translucent={false} />
                 <ScrollView>
                     <View
                         style={{
@@ -89,7 +90,17 @@ class GamePage extends Component {
                                         )
                                     );
                                 }
-                                return result;
+                                if (result.length === 0) {
+                                    return (
+                                        <Text
+                                            style={{ marginTop: 100, fontSize: 20 }}
+                                        >
+                                            Click the smiley face to start
+                                        </Text>
+                                    );
+                                } else {
+                                    return result;
+                                }
                             })()
                         }
                     </View>

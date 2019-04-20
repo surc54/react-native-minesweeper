@@ -3,6 +3,7 @@ package dev.surc.minesweeper;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import org.devio.rn.splashscreen.SplashScreenReactPackage;
 import com.thebylito.navigationbarcolor.NavigationBarColorPackage;
 import com.swmansion.gesturehandler.react.RNGestureHandlerPackage;
 import com.reactnativecommunity.viewpager.RNCViewPagerPackage;
@@ -27,6 +28,7 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new SplashScreenReactPackage(),
             new NavigationBarColorPackage(),
             new RNGestureHandlerPackage(),
             new RNCViewPagerPackage(),

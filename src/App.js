@@ -1,7 +1,9 @@
 import React from 'react';
 import { createAppContainer, createStackNavigator } from 'react-navigation';
 import { Provider } from "react-redux";
-import { createStore } from "redux";
+import { createStore, applyMiddleware } from "redux";
+import thunk from 'redux-thunk';
+import SplashScreen from "react-native-splash-screen";
 
 import GamePage from './components/GamePage';
 import LandingPage from './components/LandingPage';
@@ -35,13 +37,19 @@ const MainNavigator = createStackNavigator(
 const Navigator = createAppContainer(MainNavigator);
 
 
-const App = () => {
-    return (
-        <Provider store={createStore(reducers)}>
-            <Navigator />
-        </Provider>
-    );
-};
+class App extends React.Component {
+    componentDidMount() {
+        SplashScreen.hide();
+    }
+
+    render() {
+        return (
+            <Provider store={createStore(reducers, applyMiddleware(thunk))}>
+                <Navigator />
+            </Provider>
+        );
+    }
+}
 
 
 export default App;

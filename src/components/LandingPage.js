@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { View, Text, StyleSheet, StatusBar, BackHandler, Image } from "react-native";
+import { View, Text, StyleSheet, StatusBar, BackHandler, Image, Dimensions } from "react-native";
 import changeNavigationBarColor from "react-native-navigation-bar-color";
 import { connect } from "react-redux";
 
@@ -44,8 +44,24 @@ class LandingPage extends Component {
     render() {
         return (
             <View style={styles.container}>
-                <StatusBar barStyle="dark-content" backgroundColor="white" />
-                <Image source={require("../images/LandingLogo.png")} />
+                <StatusBar barStyle="dark-content" backgroundColor="transparent" translucent />
+                <Image
+                    source={require("../images/TopHeaderDesign.png")}
+                    style={{
+                        width: "100%",
+                        height: 175
+                    }}
+                />
+                <Image
+                    source={require("../images/MinesweeperIconRounded.png")}
+                    style={{
+                        width: 150,
+                        height: 150,
+                        marginTop: -100,
+                        marginBottom: -100
+                    }}
+                />
+                {/* <Image source={require("../images/LandingLogo.png")} /> */}
                 <Text style={styles.title}>
                     {lang.app.name}
                 </Text>
@@ -65,7 +81,7 @@ const styles = StyleSheet.create({
         paddingBottom: 50,
         flex: 1,
         alignItems: "center",
-        justifyContent: "space-around"
+        justifyContent: "space-between"
     },
     title: {
         fontSize: 40,
